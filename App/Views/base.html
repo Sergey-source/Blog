@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ STATIC }}/css/reset.min.css">
+    <link rel="stylesheet" href="{{ STATIC }}/css/base.css">
+    <script src='{{ STATIC }}/js/jquery-3.0.0.min.js'></script>
+    <script src='{{ STATIC }}/js/base.js'></script>
+    {% block links %}{% endblock %}
+    <title>{% block title %}Title{% endblock %}</title>
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/articles">Posts</a></li>
+                <!-- <li><a href="{% if user %} /article/create {% else %} # {% endif %}" {% if not user %}class='blocked'{% endif %}>Create post</a></li> -->
+                {% if not user %}
+                    <li><a href="/user/login">Войти</a></li>
+                {% else %}
+                    <li><a href="/user/logout">Выйти</a></li>
+                {% endif %}   
+                <li><a href="/user/register">Зарегистрироваться</a></li>
+
+                {% if user %}
+                    <li>{{ user.get('first_name') }} {{ user.get('last_name') }}</li>
+                {% endif %}
+
+            </ul>
+        </nav>
+        <div class="search">
+            <input type="search" name="search" placeholder="Search">
+            <button>Search</button>
+        </div>
+
+    </header>
+
+
+    {% if user.is_staff %}
+    <div class="admin_panel">
+        <a href="/admin" class="btn_admin">Admin</a>
+        <a href="/article/create">Create post</a>
+        {% block admin_content %} {% endblock %}
+    </div>
+    {% endif %}
+
+
+    {% block content %}
+    {% endblock %}
+
+</body>
+
+</html>

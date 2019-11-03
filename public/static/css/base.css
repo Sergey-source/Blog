@@ -1,0 +1,108 @@
+body{
+  background-image: url(../img/posts_list_background.jpg);
+}
+
+header{
+  width: 100%;
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: black;
+  color: white;
+  border-bottom: 1px solid #d5d5d5;
+  margin-bottom: 70px;
+}
+
+header nav{
+  width: 60%;
+}
+
+header ul{
+  display: flex;
+  justify-content: space-around;
+  font-size: 30px;
+}
+
+header a{
+  color: white;
+  text-decoration: none;
+  font-family: 'Courier New';
+  transition: 0.4s;
+
+}
+
+.active, header a:hover{
+  border-top: 1px solid green;
+  border-bottom: 1px solid green;
+  padding: 3px 0;
+}
+
+.search{
+  margin-right: 20px;
+}
+
+.search button{
+  height: 40px;
+  border: 1px solid green;
+  border-radius: 5px;
+  background: green;
+  color: white;
+  font-size: 20px;
+  text-decoration: none;
+  padding: 5px;
+  margin-left: 10px;
+}
+
+.search input{
+  height: 40px;
+  font-size: 20px;
+  padding: 5px;
+  border: 1px solid white;
+  border-radius: 5px;
+}
+
+.admin_panel{
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  border: 1px solid #d5d5d5;
+  padding: 15px;
+  opacity: 0.3;
+}
+
+.admin_panel:hover{
+  opacity: 1;
+}
+
+.admin_panel a{
+  color: black;
+  font-size: 20px;
+  padding: 10px;
+  background: #e4e4e4;
+  margin-bottom: 5px;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.admin_panel a:hover{
+  background: white;
+}
+
+.admin_panel .btn_admin{
+  border: 2px solid #25efec;
+  color: #25efec;
+  background: white;
+}
+
+.admin_panel .btn_delete{
+  background: red;
+  color: white;
+}
+
+.admin_panel .btn_delete:hover{
+  color: red;
+}

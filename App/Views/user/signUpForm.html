@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block links %}
+<link rel="stylesheet" href="{{ STATIC }}/css/form.css">
+{% endblock %}
+
+{% block title %}
+Post create
+{% endblock %}
+
+{% block content %}
+
+<main>
+    <form action="/user/register" method='post'>
+        {% for field in form.getFields() %}
+        <div class="form_group">
+            {{ field.view()|raw }}
+        </div>
+        {% if field.error %}
+        <div class="danger">
+            {{ field.error }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        <button type='submit' class='form_btn'>Зарегистрироваться</button>
+    </form>
+</main>
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block links %}
+<link rel="stylesheet" href="{{ STATIC }}/css/allArticles.css">
+<link rel="stylesheet" href="{{ STATIC }}/css/article_card.css">
+{% endblock %}
+
+
+
+
+{% block content %}
+
+<div class="posts_list">
+    <h2>Posts:</h2>
+    {% for article in articles %}
+        {% include 'includes/article_card.html' %}
+    {% endfor %}
+</div>
+
+{% endblock %}

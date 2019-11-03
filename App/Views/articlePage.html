@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block admin_content %}
+<a href="/article/{{ article.id }}/update">Update</a>
+<a href="/article/{{ article.id }}/delete">Delete</a>
+{% endblock %}
+
+{% block title %}
+    Read "{{ article.title }}" article
+{% endblock %}
+
+{% block content %}
+
+<main style='text-align:center; color: white; font-size:40px;'>
+    <h3 style='font-size:60px; margin-bottom: 20px;'>{{ article.title }}</h3>
+    <p>{{ article.body }}</p>
+    <div>
+        <a href='/article/{{ article.id }}/add-like'><img src="{{ STATIC }}/img/like.png" alt=""></a>
+        <span>{{ article.likes_count }}</span>
+    </div>
+</main>
+
+{% endblock %}
