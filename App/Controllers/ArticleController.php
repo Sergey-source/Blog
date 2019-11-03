@@ -36,7 +36,7 @@ class ArticleController extends BaseController
                 $title = $form->cleaned_data['title'];
                 $body = $form->cleaned_data['body'];
                 $this->model->create($title, $body);
-                
+
                 header('Location: http://localhost/articles ');
             }
         }
@@ -45,7 +45,7 @@ class ArticleController extends BaseController
     public function deleteAction($request, $id)
     {
         if ($this->model->delete($id)) {
-            // header('Location: http://localhost/articles ');
+            header('Location: http://localhost/articles ');
         } else {
             $this->errorHandler->error404();
         }
@@ -70,21 +70,21 @@ class ArticleController extends BaseController
                     'title' => $article['title'],
                     'body' => $article['body']
                 ]);
-                
+
                 $this->view->render('updateArticleForm.html', ['form' => $form, 'article_id' => $article['id']]);
             } else {
-                $this->errorHandler->error404();    
-            }          
+                $this->errorHandler->error404();
+            }
         }
 
         if ($request->method == 'POST')
         {
             $form = new UpdateArticleForm($request->POST);
-            
+
             if ($form->isValid()) {
                 $title = $form->cleaned_data['title'];
                 $body = $form->cleaned_data['body'];
-                
+
                 $this->model->update($title, $body, $id);
                 header('Location: http://localhost/articles ');
             }
@@ -100,7 +100,7 @@ class ArticleController extends BaseController
         } else {
             $this->model->addLike($article_id, $user_id);
         }
-        
+
         $redirect = sprintf('Location: http://localhost/article/%d/page ', $article_id);
         header($redirect);
     }

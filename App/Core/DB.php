@@ -9,7 +9,7 @@ class DB extends \PDO
 {
     const FETCH_ALL = 'all';
     const FETCH_ONE = 'one';
-    
+
     private $pdo;
     private $errorHandler;
 
@@ -26,7 +26,7 @@ class DB extends \PDO
     {
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($params);
-        
+
         if ($fetch == self::FETCH_ALL) {
             return $stmt->fetchAll(\PDO::FETCH_ASSOC);
         } else {
@@ -37,7 +37,7 @@ class DB extends \PDO
     public function select($table, array $where = [], $fetch = self::FETCH_ALL)
     {
         if (!empty($where)) {
-            $pdo_masks = $this->genPDOMasks($where);
+            $pdo_masks = implode('AND ', $this->genPDOMasks($where));
             $sql = sprintf("SELECT * FROM %s WHERE %s", $table, $pdo_masks);
         } else {
             $sql = sprintf("SELECT * FROM %s", $table);
@@ -58,7 +58,7 @@ class DB extends \PDO
         $columns = sprintf('(%s)', implode(', ', array_keys($params)));
         $pdo_masks = sprintf('(:%s)', implode(', :', array_keys($params)));
         $sql = sprintf("INSERT INTO %s %s VALUES %s", $table, $columns, $pdo_masks);
-        
+
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($params);
         return $this->pdo->lastInsertId();
@@ -66,7 +66,7 @@ class DB extends \PDO
 
     public function delete($table, $where)
     {
-        $pdo_masks = $this->genPDOMasks($where);
+        $pdo_masks = implode('AND, ', $this->genPDOMasks($where));
         $sql = sprintf("DELETE FROM %s WHERE %s", $table, $pdo_masks);
 
         $stmt = $this->pdo->prepare($sql);
@@ -76,14 +76,14 @@ class DB extends \PDO
 
     public function update($table, array $set, array $where)
     {
-        $pdo_masks = $this->genPDOMasks($set);
+        $pdo_masks = implode(', ', $this->genPDOMasks($set));
 
         $param = [];
-		foreach ($where as $key => $value) {
-			$param[] = "$key=$value";
-		}
-		$where = implode(', ', $param);
-        
+		    foreach ($where as $key => $value) {
+            $param[] = "$key=$value";
+		    }
+		    $where = implode(', ', $param);
+
         $sql = sprintf("UPDATE %s SET %s WHERE %s", $table, $pdo_masks, $where);
 
         $stmt = $this->pdo->prepare($sql);
@@ -92,8 +92,8 @@ class DB extends \PDO
 
     /**
      * Генерирует pdo шаблон
-     * 
-     * @return string
+     *
+     * @return array
      */
     private function genPDOMasks(array $params)
     {
@@ -101,8 +101,8 @@ class DB extends \PDO
         foreach (array_keys($params) as $param) {
             $pdo_masks[] = $param . '=:' . $param;
         }
-        $pdo_masks = implode(" AND ", $pdo_masks);
-        
+        // $pdo_masks = implode(" AND ", $pdo_masks);
+
         return $pdo_masks;
     }
 
